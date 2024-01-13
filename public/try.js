@@ -1,10 +1,11 @@
-import styles from './Main.module.css';
+import styles from '../src/pages/Main.module.css';
 import NewsBanner from '../../components/NewsBanner/NewsBanner';
 import NewsList from '../../components/NewsList/NewsList';
 import Skeleton from '../../components/Skeleton/Skeleton';
 import Pagination from '../../components/Pagination/Pagination';
 import { useEffect, useState } from 'react';
 import { getNews } from '../../api/apiNews';
+
 
 const Main = () => {
   const [news, setNews] = useState([]);
@@ -13,7 +14,7 @@ const Main = () => {
   const totalPages = 10;
   const pageSize = 10;
 
-  const fetchNews = async (currentPage) => {
+  const fetchNews = async (currentPage) => (
     try {
       setIsLoading(true);
       const response = await getNews(currentPage, pageSize);
@@ -21,9 +22,9 @@ const Main = () => {
       setIsLoading(false);
     } catch (error) {
       console.log(error);
-    }
-  };
-  
+    };
+  );
+
   useEffect(() => {
     fetchNews(currentPage);
   }, [currentPage]);
@@ -32,17 +33,17 @@ const Main = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
-  }
+  };
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
-  }
+  };
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
-  }
+  };
 
   return (
     <main className={styles.main}>
@@ -50,14 +51,12 @@ const Main = () => {
         <NewsBanner item={news[1]} />
       ) : (
         <Skeleton type={'banner'} count={1} />
-      )
-      }
+      )}
 
-      <Pagination handleNextPage={handleNextPage}
+      <Pagination handleNextPage={handleNextPage} 
         handlePreviousPage={handlePreviousPage}
         handlePageClick={handlePageClick}
-        totalPages={totalPages} 
-        currentPage={currentPage}
+        totalPages={totalPages}
       />
 
       {!isLoading ? (
@@ -65,15 +64,6 @@ const Main = () => {
       ) : (
         <Skeleton type={'banner'} count={10} />
       )}
-
-      <Pagination handleNextPage={handleNextPage}
-        handlePreviousPage={handlePreviousPage}
-        handlePageClick={handlePageClick}
-        totalPages={totalPages}
-        currentPage={currentPage}
-      />
     </main>
   )
-};
-
-export default Main;
+}

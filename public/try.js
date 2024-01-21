@@ -31,52 +31,52 @@ const Main = () => {
     if (filters.page_number < TOTAL_PAGES) {
       changeFilter('page_number', filters.page_number + 1);
     }
-  };
+  }
 
   const handlePreviousPage = () => {
     if (filters.page_number > 1) {
-      changeFilter('page_number', filters.page_humber - 1);
+      changeFilter('page_Number', filters.page_number - 1);
     }
-  };
+  }
 
   const handlePageClick = (pageNumber) => {
     changeFilter('page_number', pageNumber);
-  };
+  }
 
   return (
-    <main className={styles.main}>
+    <main className={styles.main} >
       {dataCategories ? 
-        <Categories categories={dataCategories.categories}
-          selectedCategories={filters.categories}
+        <Categories categories= {dataCategories.categories}
+          selectedCategory={filters.category}
           setSelectedCategory={(category) => changeFilter('category', category)}
-        /> : null}
-
-        <Search keywords={filters.keywords}
-          setKeywords={(keywords) => changeFilter('keywords', keywords)}
         />
+      : null}
 
-        <NewsBanner isLoading={isLoading} 
-          item={data && data.news && data.news[0]}
-        />
+      <Search keywords={filters.keywords} 
+        setKeywords={(keywords) => changeFilter('keywords', keywords)}
+      />
 
-        <Pagination handleNextPage={handleNextPage}
-          handlePreviousPage={handlePreviousPage}
-          handlePageClick={handlePageClick}
-          totalPages={TOTAL_PAGES}
-          currentPage={filters.page_number}
-        />
+      <NewsBanner isLoading={isLoading}
+        item={data && data.news && data.news[0]}
+      />
 
-        <NewsList isLoading={isLoading} news={data?.news} />
+      <Pagination handleNextPage={handleNextPage}
+        handlePreviousPage={handlePreviousPage}
+        handlePageClick={handlePageClick}
+        totalPages={TOTAL_PAGES}
+        currentPage={filters.page_number}
+      />
 
-        <Pagination handleNextPage={handleNextPage}
-          handlePreviousPage={handlePreviousPage}
-          handlePageClick={handlePageClick}
-          totalPages={TOTAL_PAGES}
-          currentPage={filters.page_number}
-        />
+      <NewsList isLoading={isLoading} news={data?.news} />
+
+      <Pagination handleNextPage={handleNextPage}
+        handlePreviousPage={handlePreviousPage}
+        handlePageClick={handlePageClick}
+        totalPages={TOTAL_PAGES}
+        currentPage={filters.page_number}
+      />
     </main>
   )
-
 }
 
 export default Main;
